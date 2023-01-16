@@ -167,5 +167,5 @@ if __name__ == "__main__":
             for flag in device['flags']:
                 if flag['enabled'] == True:
                     enable_AER_type(pciid=pciid, pci_address=pci_address, type=flag['aer_type'])
-                elif flag['enabled'] == True:
+                elif flag['enabled'] == False:
                     disable_AER_type(pciid=pciid, pci_address=pci_address, type=flag['aer_type'])
