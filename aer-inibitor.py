@@ -111,7 +111,7 @@ def get_AER_caps(pciid=None, pci_address=None, verbose=False):
 print(get_AER_caps(pciid="10de:1401"))
 
 
-def set_AER_caps(pciid=None, pci_address=None, type=None, enable=True):
+def set_AER_caps(pciid=None, pci_address=None, index=None, enable=True):
     # if type not in AER_TYPES_MAP.keys():
         # raise Exception(f"Provided type {type} is not supported. Valid types are {', '.join(AER_TYPES_MAP.keys())}")
     # wanted_AER_cap_index = AER_TYPES_MAP[type][0]
@@ -119,7 +119,7 @@ def set_AER_caps(pciid=None, pci_address=None, type=None, enable=True):
     AER_cap_flags = get_AER_caps(pciid=pciid, pci_address=pci_address)
     AER_caps_bin = list(bin(int(AER_cap_flags, 0))[2:])
     new_AER_cap_bin = AER_caps_bin
-    new_AER_cap_bin[-wanted_AER_cap_index] = '1' if enable else '0'
+    new_AER_cap_bin[-index] = '1' if enable else '0'
 
     new_AER_cap_flags = hex(int(new_AER_cap_bin, 2))
 
