@@ -121,7 +121,7 @@ def set_AER_caps(pciid=None, pci_address=None, index=None, enable=True):
     new_AER_cap_bin = AER_caps_bin
     new_AER_cap_bin[-index] = '1' if enable else '0'
 
-    new_AER_cap_flags = hex(int(new_AER_cap_bin, 2))
+    new_AER_cap_flags = hex(int(''.join(new_AER_cap_bin), 2))
 
     print(new_AER_cap_flags)
 
