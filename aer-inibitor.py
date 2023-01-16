@@ -128,7 +128,7 @@ def set_AER_caps(pciid=None, pci_address=None, index=None, enable=True):
     # AER_caps_hex = run_setpci_command(get_setpci_write_command(pciid=pciid, pci_address=pci_address, value=new_AER_cap_flags))
 
 
-print(set_AER_caps(pciid="10de:1401"))
+print(set_AER_caps(pciid="10de:1401", index=1))
 
 
 def set_enabled_AER_type(pciid=None, pci_address=None, type=None):
