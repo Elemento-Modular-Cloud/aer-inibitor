@@ -98,7 +98,7 @@ def get_enabled_AER_type(pciid=None, pci_address=None):
     AER_caps_bin = bin(int(f"0x{AER_caps_hex}", 0))[2:]
     print(AER_caps_bin)
     for AER_type in AER_TYPES_MAP.values():
-        print(f"{AER_type[1]} are {'enabled' if AER_caps_bin[AER_type[0]-1] else 'disabled'}")
+        print(f"{AER_type[1]} are {'enabled' if AER_caps_bin[AER_type[0]-1] == 1 else 'disabled'}")
 
 
 print(get_enabled_AER_type(pciid="10de:1401"))
