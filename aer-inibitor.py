@@ -12,7 +12,7 @@ AER_TYPES_MAP = {}
 AER_TYPES_MAP['corrected'] = (1, "Corrected errors")    # Which means 0x0001
 AER_TYPES_MAP['nonfatal'] = (2, "Non-fatal errors")     # Which means 0x0002
 AER_TYPES_MAP['fatal'] = (3, "Fatal errors")            # Which means 0x0004
-AER_TYPES_MAP['unsupported'] = (4, "Unsupported errors")# Which means 0x0008
+AER_TYPES_MAP['unsupported'] = (4, "Unsupported errors")  # Which means 0x0008
 
 # print(PCIID_REGEX.match("10de:1000"))
 # print(PCIID_REGEX.match("10de:1000f"))
@@ -92,14 +92,20 @@ def run_setpci_command(cmd):
 print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
 
 
-def get_enabled_AER_type(pciid=None, pci_address=None):
-    AER_caps_hex = run_setpci_command(get_setpci_base_command(pciid=pciid, pci_address=pci_address)).split('=')[-1].strip()
-    print(AER_caps_hex)
-    AER_caps_bin = list(bin(int(f"0x{AER_caps_hex}", 0))[2:])[-len(AER_TYPES_MAP):]
-    print(AER_caps_bin)
-    AER_caps_flag = [True if c == '1' else False for c in AER_caps_bin]
-    # for AER_type in AER_TYPES_MAP.values():
-        # print(f"{AER_type[1]} are {'enabled' if AER_caps_bin[-(AER_type[0])] == '1' else 'disabled'}")
+def get_enabled_AER_type(pciid=None, pci_address=None, verbose=False):
+    AER_caps_hex = run_setpci_command(get_setpci_base_command(pciid=pciid,
+                                                              pci_address=pci_address)
+                                      ).split('=')[-1].strip()
+    AER_caps_bin = list(bin(int(f"0x{AER_caps_hex}", 0))[
+                        2:])[-len(AER_TYPES_MAP):]
+    AER_caps_flags = [True if c == '1' else False for c in AER_caps_bin]
+
+    if verbose:
+        for AER_type in AER_TYPES_MAP.values():
+            print(
+                f"{AER_type[1]} are {'enabled' if AER_caps_bin[-(AER_type[0])] == '1' else 'disabled'}")
+
+    return AER_caps_flags
 
 
 print(get_enabled_AER_type(pciid="10de:1401"))
