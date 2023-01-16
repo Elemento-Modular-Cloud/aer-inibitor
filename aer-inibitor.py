@@ -96,3 +96,5 @@ def get_enabled_AER_type(pciid=None, pci_address=None):
     print(AER_caps_hex)
     AER_caps_bin = bin(int(AER_caps_hex, 0))[2:]
     print(AER_caps_bin)
+
+print(get_enabled_AER_type(pciid="10de:1401"))
