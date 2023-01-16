@@ -94,7 +94,7 @@ print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
 def get_enabled_AER_type(pciid=None, pci_address=None):
     AER_caps_hex = run_setpci_command(get_setpci_base_command(pciid=pciid, pci_address=pci_address)).split('=')[-1].strip()
     print(AER_caps_hex)
-    AER_caps_bin = bin(int(AER_caps_hex, 0))[2:]
+    AER_caps_bin = bin(int(f"0x{AER_caps_hex}", 0))[2:]
     print(AER_caps_bin)
 
 print(get_enabled_AER_type(pciid="10de:1401"))
