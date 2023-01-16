@@ -96,7 +96,7 @@ def get_AER_caps(pciid=None, pci_address=None, verbose=False):
     AER_caps_hex = run_setpci_command(get_setpci_read_command(pciid=pciid,
                                                               pci_address=pci_address)
                                       ).split('=')[-1].strip()
-    return "0x{AER_caps_hex}"
+    return f"0x{AER_caps_hex}"
     # AER_caps_bin = list(bin(int(f"0x{AER_caps_hex}", 0))[2:])
     # AER_cap_flags = [True if c == '1' else False for c in AER_caps_bin]
 
