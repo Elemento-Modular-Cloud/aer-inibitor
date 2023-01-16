@@ -159,7 +159,7 @@ def disable_AER_type(pciid=None, pci_address=None, type=None):
 if __name__ == "__main__":
     with open(join(dirname(__file__), 'config.yaml')) as file:
         settings = yaml.load(file, Loader=yaml.FullLoader)
-        print('settings')
+        print(settings)
 
         for device in settings['devices']:
             pciid = device.get('pciid')
