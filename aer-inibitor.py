@@ -80,12 +80,12 @@ def get_setpci_write_command(pciid=None, pci_address=None, value=None):
 def run_setpci_command(cmd):
     p = subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    retval = p.wait()
+    out, err = p.communicate()
     
-    if(p.stderr):
-        raise Exception(f"Command failed with error:/n{p.stderr}")
+    if(err):
+        raise Exception(f"Command failed with error:/n{err}")
 
-    return p.stdout.decode("utf-8")
+    return out
 
 print(run_setpci_command(get_setpci_base_command(pciid="10de:1000")))
 
