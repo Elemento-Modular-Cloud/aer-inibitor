@@ -95,7 +95,7 @@ print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
 def get_enabled_AER_type(pciid=None, pci_address=None):
     AER_caps_hex = run_setpci_command(get_setpci_base_command(pciid=pciid, pci_address=pci_address)).split('=')[-1].strip()
     print(AER_caps_hex)
-    AER_caps_bin = list(bin(int(f"0x{AER_caps_hex}", 0))[2:][-len(AER_TYPES_MAP)])
+    AER_caps_bin = list(bin(int(f"0x{AER_caps_hex}", 0))[2:])[-len(AER_TYPES_MAP):]
     print(AER_caps_bin)
     for AER_type in AER_TYPES_MAP.values():
         print(f"{AER_type[1]} are {'enabled' if AER_caps_bin[-(AER_type[0])] == '1' else 'disabled'}")
