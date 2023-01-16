@@ -1,5 +1,7 @@
+from os.path import join, dirname
 import re
 import subprocess
+import yaml
 
 HEX_PREFIX_REGEX = re.compile('^0[xX]')
 HEX_REGEX = re.compile('^(0[xX])?[0-9a-fA-F]{1,4}$')
@@ -69,7 +71,7 @@ def get_setpci_write_command(pciid=None, pci_address=None, value=None):
     if not HEX_PREFIX_REGEX.match(value):
         value = f"0x{value}"
 
-    return f"{get_setpci_base_command(pciid=pciid, pci_address=pci_address)}={value.upper()}"
+    return f"{get_setpci_base_command(pciid=pciid, pci_address=pci_address)}={value.lower()}"
 
 # print(get_setpci_write_command(pciid="10de:1000", value="0E"))
 # # print(get_setpci_write_command(pciid="10de:1000f", value="0E"))
@@ -148,6 +150,19 @@ def disable_AER_type(pciid=None, pci_address=None, type=None):
     return set_AER_caps(pciid=pciid, pci_address=pci_address, index=get_AER_type_index(type=type), enable=False)
 
 
-enable_AER_type(pciid="10de:1401", type="corrected")
-disable_AER_type(pciid="10de:1401", type="corrected")
-enable_AER_type(pciid="10de:1401", type="corrected")
+# enable_AER_type(pciid="10de:1401", type="corrected")
+# disable_AER_type(pciid="10de:1401", type="corrected")
+# enable_AER_type(pciid="10de:1401", type="corrected")
+
+if __name__ == "__main__":
+    with open(join(dirname(__file__), 'config.yaml')) as file:
+        settings = yaml.load(file, Loader=yaml.FullLoader)
+
+        for device in settings['devices']:
+            pciid = device.get('pciid')
+            pci_address = device.get('pci_address')
+            for flag in device['flags']:
+                if flag['enabled'] == True:
+                    enable_AER_type(pciid=pciid, pci_address=pci_address, type=flag['aer_type'])
+                elif flag['enabled'] == True:
+                    disable_AER_type(pciid=pciid, pci_address=pci_address, type=flag['aer_type'])
