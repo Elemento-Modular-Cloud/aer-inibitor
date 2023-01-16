@@ -81,11 +81,11 @@ def run_setpci_command(cmd):
     p = subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     out, err = p.communicate()
-    
-    if(err):
-        raise Exception(f"Command failed with error:/n{err}")
 
-    return out
+    if(err):
+        raise Exception(f"Command failed with error:/n{err.decode()}")
+
+    return out.decode()
 
 print(run_setpci_command(get_setpci_base_command(pciid="10de:1000")))
 
