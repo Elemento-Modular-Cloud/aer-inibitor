@@ -150,3 +150,4 @@ def disable_AER_type(pciid=None, pci_address=None, type=None):
 
 enable_AER_type(pciid="10de:1401", type="corrected")
 disable_AER_type(pciid="10de:1401", type="corrected")
+enable_AER_type(pciid="10de:1401", type="corrected")
