@@ -92,20 +92,48 @@ def run_setpci_command(cmd):
 print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
 
 
-def get_enabled_AER_type(pciid=None, pci_address=None, verbose=False):
-    AER_caps_hex = run_setpci_command(get_setpci_base_command(pciid=pciid,
+def get_AER_caps(pciid=None, pci_address=None, verbose=False):
+    AER_caps_hex = run_setpci_command(get_setpci_read_command(pciid=pciid,
                                                               pci_address=pci_address)
                                       ).split('=')[-1].strip()
-    AER_caps_bin = list(bin(int(f"0x{AER_caps_hex}", 0))[
-                        2:])[-len(AER_TYPES_MAP):]
-    AER_caps_flags = [True if c == '1' else False for c in AER_caps_bin]
+    return "0x{AER_caps_hex}"
+    # AER_caps_bin = list(bin(int(f"0x{AER_caps_hex}", 0))[2:])
+    # AER_cap_flags = [True if c == '1' else False for c in AER_caps_bin]
 
-    if verbose:
-        for AER_type in AER_TYPES_MAP.values():
-            print(
-                f"{AER_type[1]} are {'enabled' if AER_caps_bin[-(AER_type[0])] == '1' else 'disabled'}")
+    # if verbose:
+    #     for AER_type in AER_TYPES_MAP.values():
+    #         print(
+    #             f"{AER_type[1]} are {'enabled' if AER_caps_bin[-(AER_type[0])] == '1' else 'disabled'}")
 
-    return AER_caps_flags
+    # return AER_cap_flags
 
 
-print(get_enabled_AER_type(pciid="10de:1401"))
+print(get_AER_caps(pciid="10de:1401"))
+
+
+def set_AER_caps(pciid=None, pci_address=None, type=None, enable=True):
+    # if type not in AER_TYPES_MAP.keys():
+        # raise Exception(f"Provided type {type} is not supported. Valid types are {', '.join(AER_TYPES_MAP.keys())}")
+    # wanted_AER_cap_index = AER_TYPES_MAP[type][0]
+
+    AER_cap_flags = get_AER_caps(pciid=pciid, pci_address=pci_address)
+    AER_caps_bin = list(bin(int(AER_cap_flags, 0))[2:])
+    new_AER_cap_bin = AER_caps_bin
+    new_AER_cap_bin[-wanted_AER_cap_index] = '1' if enable else '0'
+
+    new_AER_cap_flags = hex(int(new_AER_cap_bin, 2))
+
+    print(new_AER_cap_flags)
+
+    # AER_caps_hex = run_setpci_command(get_setpci_write_command(pciid=pciid, pci_address=pci_address, value=new_AER_cap_flags))
+
+
+print(set_AER_caps(pciid="10de:1401"))
+
+
+def set_enabled_AER_type(pciid=None, pci_address=None, type=None):
+    return set_AER_caps(pciid=None, pci_address=None, type=None, enable=True)
+
+
+def set_disabled_AER_type(pciid=None, pci_address=None, type=None):
+    return set_AER_caps(pciid=None, pci_address=None, type=None, enable=False)
