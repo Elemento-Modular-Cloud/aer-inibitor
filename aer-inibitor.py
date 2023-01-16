@@ -89,7 +89,7 @@ def run_setpci_command(cmd):
     return out.decode()
 
 
-print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
+# print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
 
 
 def get_AER_caps(pciid=None, pci_address=None, verbose=False):
@@ -108,12 +108,12 @@ def get_AER_caps(pciid=None, pci_address=None, verbose=False):
     # return AER_cap_flags
 
 
-print(get_AER_caps(pciid="10de:1401"))
+# print(get_AER_caps(pciid="10de:1401"))
 
 
 def set_AER_caps(pciid=None, pci_address=None, index=None, enable=True):
     # if type not in AER_TYPES_MAP.keys():
-        # raise Exception(f"Provided type {type} is not supported. Valid types are {', '.join(AER_TYPES_MAP.keys())}")
+    # raise Exception(f"Provided type {type} is not supported. Valid types are {', '.join(AER_TYPES_MAP.keys())}")
     # wanted_AER_cap_index = AER_TYPES_MAP[type][0]
 
     AER_cap_flags = get_AER_caps(pciid=pciid, pci_address=pci_address)
@@ -128,14 +128,25 @@ def set_AER_caps(pciid=None, pci_address=None, index=None, enable=True):
     return run_setpci_command(get_setpci_write_command(pciid=pciid, pci_address=pci_address, value=new_AER_cap_flags))
 
 
-print(set_AER_caps(pciid="10de:1401", index=1))
+# print(set_AER_caps(pciid="10de:1401", index=1))
 # print(set_AER_caps(pciid="10de:1401", index=1, enable=False))
 # print(set_AER_caps(pciid="10de:1401", index=1))
 
 
-def set_enabled_AER_type(pciid=None, pci_address=None, type=None):
-    return set_AER_caps(pciid=None, pci_address=None, type=None, enable=True)
+def get_AER_type_index(type):
+    if type not in AER_TYPES_MAP.keys():
+        raise Exception(
+            f"Provided type {type} is not supported. Valid types are {', '.join(AER_TYPES_MAP.keys())}")
+    return AER_TYPES_MAP[type][0]
 
 
-def set_disabled_AER_type(pciid=None, pci_address=None, type=None):
-    return set_AER_caps(pciid=None, pci_address=None, type=None, enable=False)
+def enable_AER_type(pciid=None, pci_address=None, type=None):
+    return set_AER_caps(pciid=pciid, pci_address=pci_address, index=get_AER_type_index(type=type), enable=True)
+
+
+def disable_AER_type(pciid=None, pci_address=None, type=None):
+    return set_AER_caps(pciid=pciid, pci_address=pci_address, index=get_AER_type_index(type=type), enable=False)
+
+
+enable_AER_type(pciid="10de:1401", type="corrected")
+disable_AER_type(pciid="10de:1401", type="corrected")
