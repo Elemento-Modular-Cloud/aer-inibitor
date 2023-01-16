@@ -129,6 +129,7 @@ def set_AER_caps(pciid=None, pci_address=None, index=None, enable=True):
 
 
 print(set_AER_caps(pciid="10de:1401", index=1))
+print(set_AER_caps(pciid="10de:1401", index=1, enable=False))
 
 
 def set_enabled_AER_type(pciid=None, pci_address=None, type=None):
