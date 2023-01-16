@@ -20,10 +20,10 @@ AER_UNSUPPORTED_BIT_INDEX = 4  # Which means 0x0008
 # print(PCIADD_REGEX.match("0000:c4:00.22"))
 
 
-def hex_to_binary(hex_code):
-    bin_code = bin(hex_code)[2:]
-    padding = (4-len(bin_code) % 4) % 4
-    return '0'*padding + bin_code
+# def hex_to_binary(hex_code):
+#     bin_code = bin(hex_code)[2:]
+#     padding = (4-len(bin_code) % 4) % 4
+#     return '0'*padding + bin_code
 
 
 def get_setpci_base_command(pciid=None, pci_address=None):
@@ -87,6 +87,12 @@ def run_setpci_command(cmd):
 
     return out.decode()
 
+
 print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
 
-# def get_enabled_AER_type(pciid=None, pci_address=None):
+
+def get_enabled_AER_type(pciid=None, pci_address=None):
+    AER_caps_hex = run_setpci_command(get_setpci_base_command(pciid=pciid, pci_address=pci_address)).split('=')[-1]
+    print(AER_caps_hex)
+    AER_caps_bin = bin(int(AER_caps_hex, 0))[2:]
+    print(AER_caps_bin)
