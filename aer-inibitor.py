@@ -87,6 +87,6 @@ def run_setpci_command(cmd):
 
     return out.decode()
 
-print(run_setpci_command(get_setpci_base_command(pciid="10de:1000")))
+print(run_setpci_command(get_setpci_base_command(pciid="10de:1401")))
 
 # def get_enabled_AER_type(pciid=None, pci_address=None):
