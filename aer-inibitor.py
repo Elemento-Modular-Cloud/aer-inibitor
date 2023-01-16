@@ -8,10 +8,11 @@ PCIADD_REGEX = re.compile(
     '^([0-9]{0,4}:)?[0-9a-fA-F]{2}:[0-9a-fA-F]{2}.[0-9a-fA-F]{1,2}$')
 
 PCI_EXP_DEVCTL = 8             # Default offset from the standard CAP_EXP registry
-AER_CORRECTED_BIT_INDEX = 1    # Which means 0x0001
-AER_NONFATAL_BIT_INDEX = 2     # Which means 0x0002
-AER_FATAL_BIT_INDEX = 3        # Which means 0x0004
-AER_UNSUPPORTED_BIT_INDEX = 4  # Which means 0x0008
+AER_TYPES_MAP = {}
+AER_TYPES_MAP['corrected'] = (1, "Corrected errors")    # Which means 0x0001
+AER_TYPES_MAP['nonfatal'] = (2, "Non-fatal errors")     # Which means 0x0002
+AER_TYPES_MAP['fatal'] = (3, "Fatal errors")            # Which means 0x0004
+AER_TYPES_MAP['unsupported'] = (4, "Unsupported errors")# Which means 0x0008
 
 # print(PCIID_REGEX.match("10de:1000"))
 # print(PCIID_REGEX.match("10de:1000f"))
@@ -96,5 +97,8 @@ def get_enabled_AER_type(pciid=None, pci_address=None):
     print(AER_caps_hex)
     AER_caps_bin = bin(int(f"0x{AER_caps_hex}", 0))[2:]
     print(AER_caps_bin)
+    for AER_type in AER_TYPES_MAP.values():
+        print(f"{AER_type[1]} are {'enabled' if AER_caps_bin[AER_type[0]-1] else 'disabled'}")
+
 
 print(get_enabled_AER_type(pciid="10de:1401"))
