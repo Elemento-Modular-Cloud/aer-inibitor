@@ -123,13 +123,14 @@ def set_AER_caps(pciid=None, pci_address=None, index=None, enable=True):
 
     new_AER_cap_flags = hex(int(''.join(new_AER_cap_bin), 2))
 
-    print(new_AER_cap_flags)
+    # print(new_AER_cap_flags)
 
-    # AER_caps_hex = run_setpci_command(get_setpci_write_command(pciid=pciid, pci_address=pci_address, value=new_AER_cap_flags))
+    return run_setpci_command(get_setpci_write_command(pciid=pciid, pci_address=pci_address, value=new_AER_cap_flags))
 
 
 print(set_AER_caps(pciid="10de:1401", index=1))
-print(set_AER_caps(pciid="10de:1401", index=1, enable=False))
+# print(set_AER_caps(pciid="10de:1401", index=1, enable=False))
+# print(set_AER_caps(pciid="10de:1401", index=1))
 
 
 def set_enabled_AER_type(pciid=None, pci_address=None, type=None):
