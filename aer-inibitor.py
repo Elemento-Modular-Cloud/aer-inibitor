@@ -85,7 +85,7 @@ def run_setpci_command(cmd):
     if(p.stderr):
         raise Exception(f"Command failed with error:/n{p.stderr}")
 
-    return p.stdout
+    return p.stdout.decode("utf-8")
 
 print(run_setpci_command(get_setpci_base_command(pciid="10de:1000")))
 
