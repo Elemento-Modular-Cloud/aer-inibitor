@@ -52,14 +52,14 @@ This tool supports a `yaml` config file tom apply AER patches at boot by means o
 
 The file has the following syntax:
 
-```yml=
+```Dockerfile=
 devices:
-    - pciid: 10de:1401
+    - pciid: "10de:1401"
       flags:
       - aer_type: corrected
         enabled: False
-    - pciid: 10de:24b0
-      pci_address: 0000:c4:00.0
+    - pciid: "10de:24b0"
+      pci_address: "0000:c4:00.0"
       flags:
       - aer_type: non-fatal
         enabled: True
