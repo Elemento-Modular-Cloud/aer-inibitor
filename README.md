@@ -19,7 +19,7 @@ This repository contains a python code snippet capable of wrapping around the `s
 ### AER levels
 AER provides four levels:
 - `corrected`: an error which gets automatically corrected
-- 'non-fatal': an error which while uncorrected doesn't prevent the working order of the device
+- `non-fatal`: an error which while uncorrected doesn't prevent the working order of the device
 - `fatal`: oh, you don't want to get this...
 - `unsupported`: the name speaks by itself
 
