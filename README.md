@@ -66,4 +66,4 @@ devices:
 ```
 
 ## Conclusion
-Thanks to this
+Thanks to this tool it is possible to make the AER handling a little less intrusive and controlled, with higher granularity and isolation.
