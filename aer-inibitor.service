@@ -1,0 +1,12 @@
+[Unit]
+Description=aer-inibitor
+After=network.target network-online.target
+
+[Service]
+Type=simple
+User=root
+Restart=never
+ExecStart=python3.9 /opt/aer-inibitor/aer_inibitor.py
+
+[Install]
+WantedBy=multi-user.target
